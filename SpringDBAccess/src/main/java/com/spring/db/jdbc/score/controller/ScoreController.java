@@ -1,7 +1,5 @@
 package com.spring.db.jdbc.score.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,27 +65,9 @@ public class ScoreController {
 	@GetMapping("/selectOne")
 	public String selectOne(int stuNum, Model model, RedirectAttributes ra) {
 		System.out.println("/score/selectOne: GET");
-		
-		List<ScoreVO> list = service.selectAllScores();
-		
-		if(stuNum > list.size()) {
-			ra.addFlashAttribute("msg", "학번 정보가 없습니다.");
-			return "redirect:/score/search";
-		} else {
-			model.addAttribute("stu", service.selectOne(stuNum));
-			return "score/search-result";
-		}
+		model.addAttribute("stu", service.selectOne(stuNum));
+		return "score/search-result";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

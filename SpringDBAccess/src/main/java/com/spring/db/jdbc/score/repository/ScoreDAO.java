@@ -18,13 +18,31 @@ import com.spring.db.jdbc.score.model.ScoreVO;
 
 @Repository
 public class ScoreDAO implements IScoreDAO {
+	
+	//내부 클래스!!! (웬만하면 패키지 프렌들리로 정의)
+	class ScoreMapper implements RowMapper<ScoreVO> {
 
+		@Override
+		public ScoreVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+			ScoreVO score = new ScoreVO();
+			score.setStuId(rs.getInt("stu_id"));
+			score.setStuName(rs.getString("stu_name"));
+			score.setKor(rs.getInt("kor"));
+			score.setEng(rs.getInt("eng"));
+			score.setMath(rs.getInt("math"));
+			score.setTotal(rs.getInt("total"));
+			score.setAverage(rs.getDouble("average"));
+			return score;
+		}
+	}
+	
+	/*
 	//# 전통적 방식의 JDBC
 	private String driver = "com.mysql.cj.jdbc.Driver";
 	private String url = "jdbc:mysql://localhost:3306/spring?serverTimezone=Asia/Seoul";
 	private String uid = "root";
 	private String upw = "mysql";
-
+	*/
 	/*
 	@Override
 	public void insertScore(ScoreVO scores) {
@@ -121,17 +139,7 @@ public class ScoreDAO implements IScoreDAO {
 	@Override
 	public List<ScoreVO> selectAllScores() {
 		String sql = "SELECT * FROM scores";
-		return template.query(sql, (rs, rowNum) -> {
-				ScoreVO score = new ScoreVO();
-				score.setStuId(rs.getInt("stu_id"));
-				score.setStuName(rs.getString("stu_name"));
-				score.setKor(rs.getInt("kor"));
-				score.setEng(rs.getInt("eng"));
-				score.setMath(rs.getInt("math"));
-				score.setTotal(rs.getInt("total"));
-				score.setAverage(rs.getDouble("average"));
-				return score;
-		});
+		return template.query(sql, new ScoreMapper());
 	}
 	
 	@Override
@@ -142,7 +150,8 @@ public class ScoreDAO implements IScoreDAO {
 
 	@Override
 	public ScoreVO selectOne(int stuNum) {
-		return null;
+		String sql = "SELECT * FROM scores WHERE stu_id=?";
+		return template.queryForObject(sql, new ScoreMapper(), stuNum);
 	}
 
 

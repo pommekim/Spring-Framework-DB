@@ -33,7 +33,7 @@ public class ScoreService implements IScoreService {
 
 	@Override
 	public ScoreVO selectOne(int stuNum) {
-		return dao.selectOne(stuNum - 1);
+		return dao.selectOne(stuNum);
 	}
 	
 	
