@@ -15,7 +15,7 @@
 		search-result.jsp에 해당 정보를 화면에 출력하세요.
 	 --%>
 	
-	<form action="/web/score/selectOne">
+	<form action="/db/score/selectOne">
 		<p>
 			# 조회할 학번: <input type="text" name="stuNum" size="5">
 			<input type="submit" value="확인">

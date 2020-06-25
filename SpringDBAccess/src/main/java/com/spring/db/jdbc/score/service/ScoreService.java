@@ -28,7 +28,7 @@ public class ScoreService implements IScoreService {
 
 	@Override
 	public void deleteScore(int stuNum) {
-		dao.deleteScore(stuNum - 1);
+		dao.deleteScore(stuNum);
 	}
 
 	@Override
