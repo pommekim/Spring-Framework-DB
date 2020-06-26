@@ -14,14 +14,18 @@ import com.spring.db.jdbc.board.model.BoardVO;
 @Repository
 public class BoardDAO implements IBoardDAO {
 	
+	//내부 클래스 선언
 	class BoardMapper implements RowMapper<BoardVO> {
 
 		@Override
 		public BoardVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			return null;
+			BoardVO board = new BoardVO();
+			board.setBoardNo(rs.getInt("board_no"));
+			board.setWriter(rs.getString("writer"));
+			board.setTitle(rs.getString("title"));
+			board.setContent(rs.getString("content"));
+			return board;
 		}
-		
 	}
 	
 	@Autowired
@@ -29,7 +33,8 @@ public class BoardDAO implements IBoardDAO {
 	
 	@Override
 	public List<BoardVO> getArticles() {
-		return null;
+		String sql = "SELECT * FROM jdbc_board ORDER BY board_no DESC";
+		return template.query(sql, new BoardMapper());
 	}
 
 	@Override
@@ -40,15 +45,33 @@ public class BoardDAO implements IBoardDAO {
 
 	@Override
 	public void deleteArticle(int index) {
+		String sql = "DELETE FROM jdbc_board WHERE board_no=?";
+		template.update(sql, index);
 	}
 
 	@Override
 	public BoardVO getContent(int index) {
-		return null;
+		String sql = "SELECT * FROM jdbc_board WHERE board_no=?";
+		return template.queryForObject(sql, new BoardMapper(), index);
 	}
 
 	@Override
-	public void modifyArticle(BoardVO article, int index) {
+	public void modifyArticle(BoardVO article) {;
+		String sql = "UPDATE jdbc_board SET writer=?, title=?, content=? WHERE board_no=?";
+		template.update(sql, article.getWriter(), article.getTitle(), article.getContent(), article.getBoardNo());
 	}
+	
+	@Override
+	public List<BoardVO> getSearchList(String keyword) {
+		System.out.println(keyword);
+		String sql = "SELECT * FROM jdbc_board WHERE writer LIKE ? ORDER BY board_no DESC";
+		return template.query(sql, new BoardMapper(), keyword);
+	}
+	
+	
+	
+	
+	
+	
 
 }

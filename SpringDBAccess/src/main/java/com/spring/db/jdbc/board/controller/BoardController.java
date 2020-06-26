@@ -41,24 +41,24 @@ public class BoardController {
 	
 	//글 내용보기 요청
 	@GetMapping("/content")
-	public void content(@ModelAttribute("boardNo") int boardNo, Model model) {
+	public void content(int boardNo, Model model) {
 		System.out.println("/board/content?boardNo=" + boardNo + ": GET");
 		model.addAttribute("article", service.getContent(boardNo));
 	}
 	
 	//글 수정 화면 요청
 	@GetMapping("/modify")
-	public void modify(@ModelAttribute("boardNo") int boardNo, Model model) {
+	public void modify(int boardNo, Model model) {
 		System.out.println("/board/modify?boardNo=" + boardNo + ": GET");
 		model.addAttribute("article", service.getContent(boardNo));
 	}
 	
 	//글 수정 처리 요청
 	@PostMapping("/modify")
-	public String modify(BoardVO article, int boardNo) {
-		System.out.println("/board/modify?boardNo=" + boardNo + ": POST");
-		service.modifyArticle(article, boardNo);
-		return "redirect:/board/content?boardNo="+boardNo;
+	public String modify(BoardVO article) {
+		System.out.println("/board/modify?boardNo=" + article.getBoardNo() + ": POST");
+		service.modifyArticle(article);
+		return "redirect:/board/content?boardNo="+article.getBoardNo();
 	}
 	
 	//글 삭제 요청
@@ -69,6 +69,12 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
+	//게시글 검색 처리 요청
+	@GetMapping("/searchList")
+	public String searchList(String keyword, Model model) {
+		model.addAttribute("bList", service.getSearchList(keyword));
+		return "board/list";
+	}
 	
 	
 	

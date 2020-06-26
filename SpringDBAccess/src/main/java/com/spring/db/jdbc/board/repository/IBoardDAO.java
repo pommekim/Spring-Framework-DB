@@ -19,6 +19,9 @@ public interface IBoardDAO {
 	BoardVO getContent(int index);
 	
 	//게시글 수정
-	void modifyArticle(BoardVO article, int index);
+	void modifyArticle(BoardVO article);
+	
+	//게시글 검색
+	List<BoardVO> getSearchList(String keyword);
 
 }

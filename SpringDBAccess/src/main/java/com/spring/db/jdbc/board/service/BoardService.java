@@ -35,8 +35,15 @@ public class BoardService implements IBoardService {
 	}
 
 	@Override
-	public void modifyArticle(BoardVO article, int index) {
-		dao.modifyArticle(article, index);
+	public void modifyArticle(BoardVO article) {
+		dao.modifyArticle(article);
+	}
+
+	@Override
+	public List<BoardVO> getSearchList(String keyword) {
+		//%를 붙여서 dao에게 전달해야 함! 절대 sql문에 %를 붙이면 안됨!!!
+		keyword = "%" + keyword + "%";
+		return dao.getSearchList(keyword);
 	}
 
 }

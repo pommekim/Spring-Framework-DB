@@ -42,6 +42,12 @@
 		</c:forEach>
 		
 	</table>
+	<br>
+	
+	<form action="/db/board/searchList">
+		<input type="text" name="keyword" placeholder="작성자 이름을 입력하세요.">
+		<input type="submit" value="검색">
+	</form>
 	
 	</c:if>
 	
