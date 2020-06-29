@@ -7,12 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.spring.db.jdbc.board.model.BoardVO;
 import com.spring.db.jdbc.board.repository.IBoardDAO;
+import com.spring.db.jdbc.board.repository.IBoardMapper;
 
 @Service
 public class BoardService implements IBoardService {
 	
+	//JDBC Template을 이용한 SQL 처리.
+//	@Autowired
+//	private IBoardDAO dao;
+	
+	//MyBatis를 이용한 SQL 처리.
 	@Autowired
-	private IBoardDAO dao;
+	private IBoardMapper dao;
 
 	@Override
 	public List<BoardVO> getArticles() {

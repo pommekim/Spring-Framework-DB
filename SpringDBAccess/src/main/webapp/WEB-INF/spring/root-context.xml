@@ -30,12 +30,14 @@
 	<!-- 마이바티스 SQL 동작을 위한 핵심 객체 SqlSessionFactory 클래스 빈 등록 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="ds" />
+		<!-- DAO대신 쓸 xml파일을 빈으로 등록하기 위해 경로를 작성해줌!!! -->
 		<property name="mapperLocations" value="classpath:/mappers/**/*Mapper.xml" />
 	</bean>
 	
 	<!-- 마이바티스 xml 파일을 빈으로 등록하기 위한 스캔 설정. -->
 	<!-- ScoreMapper.xml 파일이 구현하는 인터페이스가 어디에 존재하는지 경로를 작성해줌!!! -->
 	<mybatis-spring:scan base-package="com.spring.db.mybatis.score.repository"/>
+	<mybatis-spring:scan base-package="com.spring.db.jdbc.board.repository"/>
 	
 	
 	
